@@ -485,6 +485,47 @@
                 display: none;
             }
         }
+
+        /* --- Dino Dashboard Styles --- */
+        .dashboard {
+            grid-column: 1 / -1;
+            background: var(--bg-section);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-top: 2.5rem;
+        }
+
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .dashboard-item {
+            background: #fff;
+            padding: 1.8rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-item h3 {
+            font-family: var(--font-secondary);
+            color: var(--text-dark);
+            margin-bottom: 1.2rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid var(--accent-primary);
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- Chart.js Styles (for Budget Overview chart) --- */
+        /* Ensure canvas is responsive and fits well within its container */
+        #budgetChart {
+            max-width: 100% !important;
+            height: auto !important;
+        }
     </style>
 </head>
 <body>
@@ -530,6 +571,8 @@
             <button id="filterCompleted" onclick="filterTasks('completed')">Conquered! 🔥</button>
         </div>
         <ul id="taskList"></ul>
+        <!-- Completion statistics -->
+        <div id="completionStats" style="text-align: center; margin-top: 1rem; font-weight: 600;"></div>
     </div>
 
     <!-- --- Budget Tracker Module --- -->
@@ -553,6 +596,8 @@
             <div>Spent!<span id="totalExpense" class="total-value">$0.00</span></div>
             <div>Balance<span id="finalBalance" class="total-value">$0.00</span></div>
         </div>
+        <!-- Monthly budget goals -->
+        <div id="budgetGoals" style="text-align: center; margin-top: 1rem; font-weight: 600;"></div>
     </div>
 
     <!-- --- Notes Module --- -->
@@ -570,6 +615,35 @@
         <ul id="noteList"></ul>
     </div>
 
+    <!-- --- Dino Dashboard Section --- -->
+    <div class="section dashboard">
+        <h2>🦖 Dino Dashboard</h2>
+        <div class="dashboard-content">
+            <!-- Upcoming Tasks -->
+            <div class="dashboard-item">
+                <h3>Upcoming Tasks</h3>
+                <ul id="upcomingTasks"></ul>
+            </div>
+
+            <!-- Budget Overview -->
+            <div class="dashboard-item">
+                <h3>Budget Overview</h3>
+                <canvas id="budgetChart" width="400" height="200"></canvas>
+            </div>
+
+            <!-- Recent Notes -->
+            <div class="dashboard-item">
+                <h3>Recent Notes</h3>
+                <ul id="recentNotes"></ul>
+            </div>
+
+            <!-- Daily Recommendations -->
+            <div class="dashboard-item">
+                <h3>Daily Recommendations</h3>
+                <p id="dailyRecommendations">🌟 Stay focused and conquer your tasks!</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -638,6 +712,7 @@
                     <button class="delete-btn" onclick="removeTask(${task.id})">🦕</button>
                 </li>
             `).join("") || `<li style="justify-content: center; color: var(--text-light);">The jungle is quiet. No tasks to hunt right now! 🦎</li>`;
+        renderCompletionStats(); // Update completion statistics
     };
 
     // Adds a new task based on form inputs.
@@ -695,6 +770,39 @@
         renderTasks();
     };
 
+    // Recurring tasks and templates
+    const addRecurringTask = (task, interval) => {
+        const nextDate = new Date(task.date);
+        nextDate.setDate(nextDate.getDate() + interval);
+        tasks.push({ ...task, date: nextDate.toISOString().split('T')[0] });
+        save("tasks", tasks);
+        renderTasks();
+    };
+
+    const taskTemplates = [
+        { text: "Daily Check-in", category: "Other", isImportant: false },
+        { text: "Weekly Planning", category: "Nest", isImportant: true }
+    ];
+
+    const applyTaskTemplate = template => {
+        tasks.push({ ...template, id: Date.now(), date: new Date().toISOString().split('T')[0] });
+        save("tasks", tasks);
+        renderTasks();
+    };
+
+    // Completion statistics
+    const renderCompletionStats = () => {
+        const completed = tasks.filter(task => task.isCompleted).length;
+        const total = tasks.length;
+        document.getElementById("completionStats").textContent = `Completed: ${completed}/${total}`;
+    };
+
+    // Smart suggestion feature
+    const suggestTaskPriority = () => {
+        const upcomingTasks = tasks.filter(task => !task.isCompleted && task.date);
+        upcomingTasks.sort((a, b) => new Date(a.date) - new Date(b.date));
+        return upcomingTasks[0]?.text || "No suggestions available";
+    };
 
     // --- BUDGET TRACKER MODULE ---
     let budget = load("budget", []); // Load budget entries from localStorage
@@ -751,6 +859,30 @@
         renderBudget();
     };
 
+    // Monthly budget goals
+    const monthlyGoal = { income: 2000, expense: 1500 };
+
+    const renderBudgetGoals = () => {
+        document.getElementById("budgetGoals").textContent = `Income Goal: $${monthlyGoal.income}, Expense Limit: $${monthlyGoal.expense}`;
+    };
+
+    // Spending insights
+    const calculateSpendingInsights = () => {
+        const totalIncome = budget.filter(entry => entry.type === "income").reduce((sum, entry) => sum + entry.amount, 0);
+        const totalExpense = budget.filter(entry => entry.type === "expense").reduce((sum, entry) => sum + entry.amount, 0);
+        return { totalIncome, totalExpense, balance: totalIncome - totalExpense };
+    };
+
+    // Spending recommendation
+    const recommendBudgetAdjustments = () => {
+        const insights = calculateSpendingInsights();
+        if (insights.balance < 0) {
+            return "Consider reducing expenses or increasing income sources.";
+        } else {
+            return "Your budget is on track! Keep it up!";
+        }
+    };
+
     // --- NOTES MODULE ---
     let notes = load("notes", []); // Load notes from localStorage
 
@@ -796,6 +928,60 @@
         renderNotes();
     };
 
+    // Categories, tags, and markdown support
+    const renderMarkdown = markdown => {
+        const converter = new showdown.Converter();
+        return converter.makeHtml(markdown);
+    };
+
+    const addNoteWithTags = (title, content, tags) => {
+        notes.push({ title, content, tags, id: Date.now() });
+        save("notes", notes);
+        renderNotes();
+    };
+
+    // Search functionality
+    const searchNotes = query => {
+        return notes.filter(note => note.title.includes(query) || note.content.includes(query));
+    };
+
+    // Related notes feature
+    const findRelatedNotes = tags => {
+        return notes.filter(note => tags.some(tag => note.tags.includes(tag)));
+    };
+
+    // --- DINO DASHBOARD ---
+    const renderDashboard = () => {
+        // Render upcoming tasks
+        const upcomingTasks = tasks.filter(task => !task.isCompleted).slice(0, 5);
+        document.getElementById("upcomingTasks").innerHTML = upcomingTasks.map(task => `
+            <li>${task.text} - ${task.date || "No date"}</li>
+        `).join("");
+
+        // Render budget overview (placeholder for chart rendering)
+        const ctx = document.getElementById("budgetChart").getContext("2d");
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Income', 'Expense'],
+                datasets: [{
+                    label: 'Budget Overview',
+                    data: [1000, 500], // Placeholder data
+                    backgroundColor: ['#81c784', '#e57373']
+                }]
+            }
+        });
+
+        // Render recent notes
+        const recentNotes = notes.slice(0, 5);
+        document.getElementById("recentNotes").innerHTML = recentNotes.map(note => `
+            <li>${note.title}</li>
+        `).join("");
+
+        // Render daily recommendations (placeholder)
+        document.getElementById("dailyRecommendations").textContent = "🌟 Remember to prioritize tasks with upcoming deadlines!";
+    };
+
     // --- INITIALIZE APP ---
     // This function runs when the page loads, initializing all modules.
     const initialize = () => {
@@ -804,6 +990,8 @@
         renderTasks(); // Renders tasks
         renderBudget(); // Renders budget
         renderNotes(); // Renders notes
+        renderDashboard(); // Renders dashboard
+        renderBudgetGoals(); // Renders monthly budget goals
     };
 
     // Call initialize when the DOM is fully loaded.
