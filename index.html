@@ -743,9 +743,12 @@
 
     // Updates the budget totals displayed in the main Budget module.
     const updateTotals = (income, expense) => {
+        // Add debugging logs to verify data flow
+        console.log("Updating totals with:", { income, expense });
         document.getElementById("totalIncome").textContent = `$${income.toFixed(2)}`;
         document.getElementById("totalExpense").textContent = `$${expense.toFixed(2)}`;
         document.getElementById("finalBalance").textContent = `$${(income - expense).toFixed(2)}`;
+        updateDashboardBudget();
     };
 
     // --- CALENDAR AND TIME DISPLAY ---
@@ -1169,6 +1172,8 @@
 
     // Call the function whenever budget totals are updated
     updateTotals = (income, expense) => {
+        // Add debugging logs to verify data flow
+        console.log("Updating totals with:", { income, expense });
         document.getElementById("totalIncome").textContent = `$${income.toFixed(2)}`;
         document.getElementById("totalExpense").textContent = `$${expense.toFixed(2)}`;
         document.getElementById("finalBalance").textContent = `$${(income - expense).toFixed(2)}`;
