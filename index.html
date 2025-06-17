@@ -526,6 +526,60 @@
             max-width: 100% !important;
             height: auto !important;
         }
+
+        /* --- Theme Customization --- */
+        .theme-switcher {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .theme-switcher h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .theme-switcher select {
+            font-family: var(--font-main);
+            font-size: 1.15rem;
+            padding: 1rem;
+            border-radius: 18px;
+            border: 2px solid var(--text-light);
+            background-color: #f8fcf8;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .theme-switcher select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 12px var(--accent-primary);
+        }
+
+        /* --- Data Visualization --- */
+        .data-visualization {
+            grid-column: 1 / -1;
+            background: var(--bg-section);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-top: 2.5rem;
+        }
+
+        .data-visualization h2 {
+            font-family: var(--font-secondary);
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 100% !important;
+            height: auto !important;
+            margin-bottom: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -643,6 +697,24 @@
                 <p id="dailyRecommendations">🌟 Stay focused and conquer your tasks!</p>
             </div>
         </div>
+    </div>
+
+    <!-- --- Theme Customization --- -->
+    <div class="theme-switcher">
+        <h2>🎨 Theme Customization</h2>
+        <select id="themeSelector" onchange="applyTheme(this.value)">
+            <option value="dino">Dino Theme</option>
+            <option value="dark">Dark Mode</option>
+            <option value="autism">Autism-Friendly Theme</option>
+            <option value="professional">Professional Theme</option>
+        </select>
+    </div>
+
+    <!-- --- Data Visualization --- -->
+    <div class="data-visualization">
+        <h2>📊 Data Visualization</h2>
+        <canvas id="budgetTrendsChart" width="400" height="200"></canvas>
+        <canvas id="productivityHeatmap" width="400" height="200"></canvas>
     </div>
 </div>
 
@@ -984,6 +1056,84 @@
         document.getElementById("dailyRecommendations").textContent = "🌟 Remember to prioritize tasks with upcoming deadlines!";
     };
 
+    // --- THEME CUSTOMIZATION ---
+    const themes = {
+        dino: {
+            '--bg-main': '#ffebee',
+            '--text-dark': '#4a148c',
+            '--accent-primary': '#ffcdb2',
+        },
+        dark: {
+            '--bg-main': '#121212',
+            '--text-dark': '#ffffff',
+            '--accent-primary': '#bb86fc',
+        },
+        autism: {
+            '--bg-main': '#f0f4c3',
+            '--text-dark': '#1b5e20',
+            '--accent-primary': '#ffcc80',
+        },
+        professional: {
+            '--bg-main': '#e0f7fa',
+            '--text-dark': '#004d40',
+            '--accent-primary': '#80cbc4',
+        }
+    };
+
+    const applyTheme = theme => {
+        const root = document.documentElement;
+        const selectedTheme = themes[theme];
+        for (const [key, value] of Object.entries(selectedTheme)) {
+            root.style.setProperty(key, value);
+        }
+        localStorage.setItem('theme', theme);
+    };
+
+    const loadTheme = () => {
+        const savedTheme = localStorage.getItem('theme') || 'dino';
+        document.getElementById('themeSelector').value = savedTheme;
+        applyTheme(savedTheme);
+    };
+
+    // --- DATA VISUALIZATION ---
+    const renderBudgetTrends = () => {
+        const ctx = document.getElementById('budgetTrendsChart').getContext('2d');
+        const monthlyData = [500, 700, 800, 600, 900, 1000]; // Placeholder data
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Budget Trends',
+                    data: monthlyData,
+                    borderColor: '#81c784',
+                    backgroundColor: 'rgba(129, 199, 132, 0.2)',
+                }]
+            }
+        });
+    };
+
+    const renderProductivityHeatmap = () => {
+        const canvas = document.getElementById('productivityHeatmap');
+        const ctx = canvas.getContext('2d');
+        const heatmapData = [
+            [1, 2, 3, 4, 5],
+            [2, 3, 4, 5, 6],
+            [3, 4, 5, 6, 7],
+            [4, 5, 6, 7, 8],
+            [5, 6, 7, 8, 9]
+        ];
+
+        const cellSize = 40;
+        heatmapData.forEach((row, rowIndex) => {
+            row.forEach((value, colIndex) => {
+                const intensity = Math.min(255, value * 30);
+                ctx.fillStyle = `rgb(${255 - intensity}, ${255 - intensity}, ${255})`;
+                ctx.fillRect(colIndex * cellSize, rowIndex * cellSize, cellSize, cellSize);
+            });
+        });
+    };
+
     // --- INITIALIZE APP ---
     // This function runs when the page loads, initializing all modules.
     const initialize = () => {
@@ -994,6 +1144,7 @@
         renderNotes(); // Renders notes
         renderDashboard(); // Renders dashboard
         renderBudgetGoals(); // Renders monthly budget goals
+        loadTheme(); // Load and apply saved theme
     };
 
     // Call initialize when the DOM is fully loaded.
