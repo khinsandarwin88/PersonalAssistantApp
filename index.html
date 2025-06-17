@@ -694,7 +694,7 @@
             <div class="dashboard-item">
                 <h3>Budget Overview</h3>
                 <canvas id="budgetChart" width="400" height="200"></canvas>
-                <p id="budgetSummary">Income: $0.00, Expense: $0.00, Balance: $0.00</p>
+                <p id="budgetSummary">Income: $<span id="dashboardIncome">0.00</span>, Expense: $<span id="dashboardExpense">0.00</span>, Balance: $<span id="dashboardBalance">0.00</span></p>
             </div>
 
             <!-- Recent Notes -->
@@ -1059,6 +1059,9 @@
         document.getElementById("dailyRecommendations").textContent = "🌟 Remember to prioritize tasks with upcoming deadlines!";
     };
 
+    // Call renderDashboard when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', renderDashboard);
+
     // --- THEME CUSTOMIZATION ---
     const themes = {
         dino: {
@@ -1152,6 +1155,25 @@
 
     // Call initialize when the DOM is fully loaded.
     document.addEventListener('DOMContentLoaded', initialize);
+
+    // Link Budget Overview dynamically with Dino Budget's data
+    const updateDashboardBudget = () => {
+        const income = parseFloat(document.getElementById("totalIncome").textContent.replace('$', '')) || 0;
+        const expense = parseFloat(document.getElementById("totalExpense").textContent.replace('$', '')) || 0;
+        const balance = parseFloat(document.getElementById("finalBalance").textContent.replace('$', '')) || 0;
+
+        document.getElementById("dashboardIncome").textContent = income.toFixed(2);
+        document.getElementById("dashboardExpense").textContent = expense.toFixed(2);
+        document.getElementById("dashboardBalance").textContent = balance.toFixed(2);
+    };
+
+    // Call the function whenever budget totals are updated
+    updateTotals = (income, expense) => {
+        document.getElementById("totalIncome").textContent = `$${income.toFixed(2)}`;
+        document.getElementById("totalExpense").textContent = `$${expense.toFixed(2)}`;
+        document.getElementById("finalBalance").textContent = `$${(income - expense).toFixed(2)}`;
+        updateDashboardBudget();
+    };
 </script>
 </body>
 </html>
