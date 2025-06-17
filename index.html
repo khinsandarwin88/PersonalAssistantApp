@@ -958,15 +958,17 @@
             <li>${task.text} - ${task.date || "No date"}</li>
         `).join("");
 
-        // Render budget overview (placeholder for chart rendering)
+        // Render budget overview
         const ctx = document.getElementById("budgetChart").getContext("2d");
+        const totalIncome = budget.filter(entry => entry.type === "income").reduce((sum, entry) => sum + entry.amount, 0);
+        const totalExpense = budget.filter(entry => entry.type === "expense").reduce((sum, entry) => sum + entry.amount, 0);
         new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ['Income', 'Expense'],
                 datasets: [{
                     label: 'Budget Overview',
-                    data: [1000, 500], // Placeholder data
+                    data: [totalIncome, totalExpense],
                     backgroundColor: ['#81c784', '#e57373']
                 }]
             }
@@ -975,10 +977,10 @@
         // Render recent notes
         const recentNotes = notes.slice(0, 5);
         document.getElementById("recentNotes").innerHTML = recentNotes.map(note => `
-            <li>${note.title}</li>
+            <li>${note.title}: ${note.content.substring(0, 50)}...</li>
         `).join("");
 
-        // Render daily recommendations (placeholder)
+        // Render daily recommendations
         document.getElementById("dailyRecommendations").textContent = "🌟 Remember to prioritize tasks with upcoming deadlines!";
     };
 
