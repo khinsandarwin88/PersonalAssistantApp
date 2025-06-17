@@ -669,6 +669,17 @@
         <ul id="noteList"></ul>
     </div>
 
+    <!-- --- Theme Customization Section --- -->
+    <div class="theme-switcher">
+        <h2>🎨 Theme Customization</h2>
+        <select id="themeSelector" onchange="applyTheme(this.value)">
+            <option value="dino">Dino Theme</option>
+            <option value="dark">Dark Mode</option>
+            <option value="autism">Autism-Friendly Theme</option>
+            <option value="professional">Professional Theme</option>
+        </select>
+    </div>
+
     <!-- --- Dino Dashboard Section --- -->
     <div class="section dashboard">
         <h2>🦖 Dino Dashboard</h2>
@@ -683,6 +694,7 @@
             <div class="dashboard-item">
                 <h3>Budget Overview</h3>
                 <canvas id="budgetChart" width="400" height="200"></canvas>
+                <p id="budgetSummary">Income: $0.00, Expense: $0.00, Balance: $0.00</p>
             </div>
 
             <!-- Recent Notes -->
@@ -697,17 +709,6 @@
                 <p id="dailyRecommendations">🌟 Stay focused and conquer your tasks!</p>
             </div>
         </div>
-    </div>
-
-    <!-- --- Theme Customization --- -->
-    <div class="theme-switcher">
-        <h2>🎨 Theme Customization</h2>
-        <select id="themeSelector" onchange="applyTheme(this.value)">
-            <option value="dino">Dino Theme</option>
-            <option value="dark">Dark Mode</option>
-            <option value="autism">Autism-Friendly Theme</option>
-            <option value="professional">Professional Theme</option>
-        </select>
     </div>
 
     <!-- --- Data Visualization --- -->
@@ -1034,6 +1035,7 @@
         const ctx = document.getElementById("budgetChart").getContext("2d");
         const totalIncome = budget.filter(entry => entry.type === "income").reduce((sum, entry) => sum + entry.amount, 0);
         const totalExpense = budget.filter(entry => entry.type === "expense").reduce((sum, entry) => sum + entry.amount, 0);
+        const balance = totalIncome - totalExpense;
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -1045,6 +1047,7 @@
                 }]
             }
         });
+        document.getElementById("budgetSummary").textContent = `Income: $${totalIncome.toFixed(2)}, Expense: $${totalExpense.toFixed(2)}, Balance: $${balance.toFixed(2)}`;
 
         // Render recent notes
         const recentNotes = notes.slice(0, 5);
