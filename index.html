@@ -6,8 +6,6 @@
     <title>🦖 DinoDesk (Your Dino Personal Assistant) 🌿</title>
     <style>
         /* --- Root Variables for Cute Dino Theme (with Turquoise accent) --- */
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Balsamiq+Sans:wght@400;700&display=swap');
-
         :root {
             --font-main: 'Balsamiq Sans', cursive; /* Playful, friendly handwritten style */
             --font-secondary: 'Fredoka One', cursive; /* Bold, blocky, impactful for titles */
@@ -23,7 +21,71 @@
             --shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Soft, subtle shadow */
             --border-radius: 25px; /* Rounded corners for all elements */
             --color-turquoise: #40E0D0; /* Added Turquoise color for bounce */
+            /* Gamification colors */
+            --color-gold: #FFD700;
+            --color-silver: #C0C0C0;
+            --color-bronze: #CD7F32;
         }
+
+        /* Dark Theme Variables Override */
+        body.dark-theme {
+            --bg-main: #1a1a2e;
+            --bg-section: #232946;
+            --text-dark: #e0e0e0; /* Changed to a lighter visible color */
+            --text-light: #b0b0b0; /* Changed to a lighter visible color */
+            --accent-primary: #e94560;
+            --accent-secondary: #8b5e83;
+            --accent-highlight: #ffb0b0;
+            --color-success: #4CAF50;
+            --color-danger: #F44336;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Autism-Friendly Theme Variables Override */
+        body.autism-theme {
+            --bg-main: #e3f2fd; /* Light blue */
+            --bg-section: #bbdefb; /* Slightly darker blue */
+            --text-dark: #1565c0; /* Dark blue */
+            --text-light: #64b5f6; /* Medium blue */
+            --accent-primary: #90caf9; /* Light blue */
+            --accent-secondary: #e1f5fe; /* Very light blue */
+            --accent-highlight: #a7ffeb; /* Aqua */
+            --color-success: #4dd0e1; /* Cyan */
+            --color-danger: #ffab91; /* Light orange */
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --border-radius: 15px; /* Slightly less rounded */
+        }
+
+        /* Professional Theme Variables Override */
+        body.professional-theme {
+            --bg-main: #f5f5f5; /* Light gray */
+            --bg-section: #ffffff; /* White */
+            --text-dark: #37474f; /* Dark grayish blue */
+            --text-light: #78909c; /* Muted gray blue */
+            --accent-primary: #42a5f5; /* Professional blue */
+            --accent-secondary: #e3f2fd; /* Lighter blue */
+            --accent-highlight: #b3e5fc; /* Even lighter blue */
+            --color-success: #66bb6a; /* Professional green */
+            --color-danger: #ef5350; /* Professional red */
+            --shadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
+            --border-radius: '10px', /* Sharper corners */
+        }
+
+        /* Color Blind Friendly Theme Variables Override */
+        body.color-blind-friendly-theme {
+            --bg-main: #f0f8ff; /* Alice Blue - very light, neutral */
+            --bg-section: #e0f2f7; /* Light Cyan - calm, slightly tinted */
+            --text-dark: #005f73; /* Dark Teal - good contrast for text */
+            --text-light: #48b1bf; /* Medium Teal - for muted text */
+            --accent-primary: #e69f00; /* Orange - highly visible accent */
+            --accent-secondary: #0072b2; /* Blue - another distinct accent */
+            --accent-highlight: #56b4e9; /* Light Blue - for highlights */
+            --color-success: #009e73; /* Greenish Teal - distinct from red/orange */
+            --color-danger: #d55e00; /* Reddish Orange - distinct for errors */
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --border-radius: 20px;
+        }
+
 
         /* --- Global Styles --- */
         * {
@@ -42,6 +104,7 @@
             align-items: center;
             position: relative;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s; /* Smooth theme transitions */
         }
 
         /* --- T-Rex Background Pseudo-element --- */
@@ -128,6 +191,7 @@
             display: flex;
             flex-direction: column;
             border: 4px solid var(--accent-secondary);
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth theme transitions */
         }
 
         h2 {
@@ -140,6 +204,7 @@
             font-size: 2.2rem;
             text-align: center;
             letter-spacing: 1px;
+            transition: color 0.3s, border-color 0.3s; /* Smooth theme transitions */
         }
 
         /* --- Form Elements Styling --- */
@@ -155,6 +220,23 @@
             background-color: #f8fcf8;
             color: var(--text-dark);
         }
+
+        /* Dark theme specific input/textarea/select styling */
+        body.dark-theme input,
+        body.dark-theme textarea,
+        body.dark-theme select {
+            background-color: #3b3b5c; /* Darker background for inputs */
+            color: var(--text-dark);
+            border-color: var(--accent-secondary);
+        }
+        body.color-blind-friendly-theme input,
+        body.color-blind-friendly-theme textarea,
+        body.color-blind-friendly-theme select {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            border-color: var(--text-light);
+        }
+
 
         input:focus, textarea:focus, select:focus {
             outline: none;
@@ -199,8 +281,19 @@
             gap: 20px;
             word-break: break-word;
             border: 1px solid #f8bbd0; /* Soft pink border */
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth theme transitions */
         }
+
+        /* Dark theme specific list item styling */
+        body.dark-theme li {
+            background-color: #3f4871; /* Darker background for list items */
+            border-color: var(--accent-secondary);
+        }
+        body.color-blind-friendly-theme li {
+            background-color: #ffffff;
+            border-color: var(--text-light);
+        }
+
 
         li.completed span {
             text-decoration: line-through;
@@ -230,6 +323,7 @@
             font-style: italic;
             border: 4px solid var(--color-success);
             line-height: 1.4;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth theme transitions */
         }
 
         #currentDate {
@@ -352,6 +446,18 @@
             padding: 1rem 1.4rem;
             font-size: 1.05rem;
         }
+        /* Dark theme specific filter button styling */
+        body.dark-theme .task-filters button {
+            background-color: #4a507b;
+            color: var(--text-dark);
+            border-color: var(--text-light);
+        }
+        body.color-blind-friendly-theme .task-filters button {
+            background-color: #e0f2f7;
+            color: var(--text-dark);
+            border-color: var(--text-light);
+        }
+
 
         .task-filters button.active {
             background: var(--accent-secondary);
@@ -488,27 +594,41 @@
 
         /* --- Dino Dashboard Styles --- */
         .dashboard {
-            grid-column: 1 / -1;
+            grid-column: 1 / -1; /* Spans full width */
             background: var(--bg-section);
             padding: 2.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             margin-top: 2.5rem;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth theme transitions */
         }
-
         .dashboard-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* Two equal columns for parallel layout */
             gap: 2rem;
+            /* Responsive adjustment for small screens */
+            @media (max-width: 768px) {
+                grid-template-columns: 1fr; /* Stack vertically on small screens */
+            }
         }
-
         .dashboard-item {
-            background: #fff;
+            background: #fff; /* White background for dashboard items */
             padding: 1.8rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
+            border: 1px solid var(--text-light); /* Soft border for items */
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth theme transitions */
+        }
+        /* Dark theme dashboard item styling */
+        body.dark-theme .dashboard-item {
+            background-color: #3f4871;
+            border-color: var(--accent-secondary);
+        }
+        body.color-blind-friendly-theme .dashboard-item {
+            background-color: #ffffff;
+            border-color: var(--text-light);
         }
 
         .dashboard-item h3 {
@@ -518,28 +638,83 @@
             font-size: 1.8rem;
             border-bottom: 3px solid var(--accent-primary);
             padding-bottom: 0.5rem;
+            transition: color 0.3s, border-color 0.3s; /* Smooth theme transitions */
         }
 
-        /* --- Chart.js Styles (for Budget Overview chart) --- */
-        /* Ensure canvas is responsive and fits well within its container */
-        #budgetChart {
-            max-width: 100% !important;
-            height: auto !important;
+        /* Aesthetic display for Budget Overview in Dashboard */
+        #dashboardBudgetSummary {
+            display: flex;
+            flex-direction: column; /* Stack lines vertically */
+            gap: 0.5rem; /* Space between lines */
+            font-size: 1.1rem;
+            font-weight: 600;
         }
+        .dashboard-budget-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--text-light);
+            color: var(--text-dark); /* Ensure text color changes with theme */
+        }
+        .dashboard-budget-line:last-child {
+            border-bottom: none;
+        }
+        .dashboard-budget-line .value {
+            font-weight: 800;
+        }
+        .dashboard-budget-line.income .value { color: var(--color-success); }
+        .dashboard-budget-line.expense .value { color: var(--color-danger); }
+        .dashboard-budget-line.balance .value { color: var(--text-dark); }
+
+        /* Dashboard Upcoming Tasks / Recent Notes - only show one item */
+        .dashboard-item ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .dashboard-item ul li {
+            background: none; /* Remove background for list items in dashboard */
+            border: none; /* Remove border for list items in dashboard */
+            padding: 0;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            word-break: break-word;
+            font-size: 1rem;
+            color: var(--text-dark);
+            display: block; /* Ensure it's a block element */
+        }
+        .dashboard-item ul li:last-child {
+            margin-bottom: 0;
+        }
+        .dashboard-item ul li strong {
+            display: block;
+            margin-bottom: 0.2rem;
+            color: var(--text-dark);
+        }
+        .dashboard-item ul li small {
+            color: var(--text-light);
+        }
+
 
         /* --- Theme Customization --- */
         .theme-switcher {
-            grid-column: 1 / -1;
+            grid-column: 1 / -1; /* Spans full width */
+            background: var(--bg-section);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem; /* Space before dashboard */
             text-align: center;
-            margin-bottom: 2.5rem;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth theme transitions */
         }
-
         .theme-switcher h2 {
             font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--text-dark);
+            border-bottom: none; /* No border for this H2 */
+            padding-bottom: 0;
         }
-
         .theme-switcher select {
             font-family: var(--font-main);
             font-size: 1.15rem;
@@ -550,6 +725,17 @@
             color: var(--text-dark);
             transition: all 0.3s ease;
         }
+        /* Dark theme specific theme switcher select styling */
+        body.dark-theme .theme-switcher select {
+            background-color: #3b3b5c;
+            color: var(--text-dark);
+            border-color: var(--accent-secondary);
+        }
+        body.color-blind-friendly-theme .theme-switcher select {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            border-color: var(--text-light);
+        }
 
         .theme-switcher select:focus {
             outline: none;
@@ -557,29 +743,84 @@
             box-shadow: 0 0 12px var(--accent-primary);
         }
 
-        /* --- Data Visualization --- */
-        .data-visualization {
-            grid-column: 1 / -1;
+        /* --- Gamification Section --- */
+        .gamification-section {
+            grid-column: 1 / -1; /* Spans full width */
             background: var(--bg-section);
             padding: 2.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             margin-top: 2.5rem;
+            display: grid; /* Use grid for internal layout of gamification elements */
+            grid-template-columns: repeat(2, 1fr); /* Force two columns */
+            gap: 2rem;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth theme transitions */
+        }
+        /* Responsive adjustment for small screens: stack gamification items vertically */
+        @media (max-width: 768px) {
+            .gamification-section {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .data-visualization h2 {
+        .gamification-item {
+            background: #fff; /* White background for items */
+            padding: 1.8rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 1px solid var(--text-light);
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s; /* Smooth theme transitions */
+        }
+        /* Dark theme gamification item styling */
+        body.dark-theme .gamification-item {
+            background-color: #3f4871;
+            border-color: var(--accent-secondary);
+        }
+        body.color-blind-friendly-theme .gamification-item {
+            background-color: #ffffff;
+            border-color: var(--text-light);
+        }
+
+        .gamification-item h3 {
             font-family: var(--font-secondary);
             color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid var(--accent-primary);
+            padding-bottom: 0.5rem;
+        }
+        .gamification-item p {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            color: var(--text-dark);
+        }
+        .achievement-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .badge {
+            font-size: 2.5rem; /* Larger emoji badges */
+            cursor: help; /* Indicates more info on hover */
+            filter: grayscale(100%); /* Start grayed out */
+            opacity: 0.5;
+            transition: filter 0.3s, opacity 0.3s;
+        }
+        .badge.unlocked {
+            filter: grayscale(0%); /* Full color when unlocked */
+            opacity: 1;
+            transform: scale(1.1);
+            animation: pulse-badge 1s infinite alternate; /* Subtle pulse for new badges */
+        }
+        @keyframes pulse-badge {
+            from { transform: scale(1.0); }
+            to { transform: scale(1.05); }
         }
 
-        canvas {
-            max-width: 100% !important;
-            height: auto !important;
-            margin-bottom: 2rem;
-        }
     </style>
 </head>
 <body>
@@ -593,6 +834,49 @@
 <div class="datetime-display">
     <span id="currentDate"><span class="emoji">📅</span></span>
     <span id="currentTime"><span class="emoji">⏰</span></span>
+</div>
+
+<!-- --- Theme Customization Section --- -->
+<div class="theme-switcher">
+    <h2>🎨 Theme Customization</h2>
+    <select id="themeSelector" onchange="applyTheme(this.value)">
+        <option value="dino">Dino Theme</option>
+        <option value="dark">Dark Mode</option>
+        <option value="autism">Autism-Friendly Theme</option>
+        <option value="professional">Professional Theme</option>
+        <option value="color-blind-friendly">Color Blind Friendly Theme</option>
+    </select>
+</div>
+
+<!-- --- Dino Dashboard Section --- -->
+<div class="section dashboard">
+    <h2>🦖 Dino Dashboard</h2>
+    <div class="dashboard-content">
+        <!-- Upcoming Tasks -->
+        <div class="dashboard-item">
+            <h3>Upcoming Task</h3>
+            <ul id="upcomingTasks"></ul>
+        </div>
+        <!-- Budget Overview (aesthetic display) -->
+        <div class="dashboard-item">
+            <h3>Budget Overview</h3>
+            <div id="dashboardBudgetSummary">
+                <div class="dashboard-budget-line income">Income: <span class="value" id="dashboardIncome">$0.00</span></div>
+                <div class="dashboard-budget-line expense">Expense: <span class="value" id="dashboardExpense">$0.00</span></div>
+                <div class="dashboard-budget-line balance">Balance: <span class="value" id="dashboardBalance">$0.00</span></div>
+            </div>
+        </div>
+        <!-- Recent Notes -->
+        <div class="dashboard-item">
+            <h3>Latest Note</h3>
+            <ul id="recentNotes"></ul>
+        </div>
+        <!-- Daily Recommendations -->
+        <div class="dashboard-item">
+            <h3>Daily Wisdom</h3>
+            <p id="dailyRecommendations">🌟 Remember to prioritize tasks with upcoming deadlines!</p>
+        </div>
+    </div>
 </div>
 
 <div class="main-container">
@@ -625,8 +909,6 @@
             <button id="filterCompleted" onclick="filterTasks('completed')">Conquered! 🔥</button>
         </div>
         <ul id="taskList"></ul>
-        <!-- Completion statistics -->
-        <div id="completionStats" style="text-align: center; margin-top: 1rem; font-weight: 600;"></div>
     </div>
 
     <!-- --- Budget Tracker Module --- -->
@@ -650,8 +932,6 @@
             <div>Spent!<span id="totalExpense" class="total-value">$0.00</span></div>
             <div>Balance<span id="finalBalance" class="total-value">$0.00</span></div>
         </div>
-        <!-- Monthly budget goals -->
-        <div id="budgetGoals" style="text-align: center; margin-top: 1rem; font-weight: 600;"></div>
     </div>
 
     <!-- --- Notes Module --- -->
@@ -668,70 +948,40 @@
         </div>
         <ul id="noteList"></ul>
     </div>
+</div>
 
-    <!-- --- Theme Customization Section --- -->
-    <div class="theme-switcher">
-        <h2>🎨 Theme Customization</h2>
-        <select id="themeSelector" onchange="applyTheme(this.value)">
-            <option value="dino">Dino Theme</option>
-            <option value="dark">Dark Mode</option>
-            <option value="autism">Autism-Friendly Theme</option>
-            <option value="professional">Professional Theme</option>
-        </select>
+<!-- --- Gamification Section --- -->
+<div class="section gamification-section">
+    <h2>🏆 Dino Achievements</h2>
+    <div class="gamification-item">
+        <h3>Current Progress</h3>
+        <p>Points: <span id="dinoPoints">0</span> 🌟</p>
+        <p>Level: <span id="dinoLevel">1</span> 👑</p> <!-- Level combined here -->
     </div>
-
-    <!-- --- Dino Dashboard Section --- -->
-    <div class="section dashboard">
-        <h2>🦖 Dino Dashboard</h2>
-        <div class="dashboard-content">
-            <!-- Upcoming Tasks -->
-            <div class="dashboard-item">
-                <h3>Upcoming Tasks</h3>
-                <ul id="upcomingTasks"></ul>
-            </div>
-
-            <!-- Budget Overview -->
-            <div class="dashboard-item">
-                <h3>Budget Overview</h3>
-                <canvas id="budgetChart" width="400" height="200"></canvas>
-                <p id="budgetSummary">Income: $<span id="dashboardIncome">0.00</span>, Expense: $<span id="dashboardExpense">0.00</span>, Balance: $<span id="dashboardBalance">0.00</span></p>
-            </div>
-
-            <!-- Recent Notes -->
-            <div class="dashboard-item">
-                <h3>Recent Notes</h3>
-                <ul id="recentNotes"></ul>
-            </div>
-
-            <!-- Daily Recommendations -->
-            <div class="dashboard-item">
-                <h3>Daily Recommendations</h3>
-                <p id="dailyRecommendations">🌟 Stay focused and conquer your tasks!</p>
-            </div>
+    <div class="gamification-item">
+        <h3>Daily Streak</h3>
+        <p><span id="dinoStreak">0</span> 🔥 days in a row!</p>
+    </div>
+    <div class="gamification-item">
+        <h3>Badge Collection</h3>
+        <div class="achievement-badges" id="achievementBadges">
+            <!-- Badges will be rendered here by JS -->
         </div>
-    </div>
-
-    <!-- --- Data Visualization --- -->
-    <div class="data-visualization">
-        <h2>📊 Data Visualization</h2>
-        <canvas id="budgetTrendsChart" width="400" height="200"></canvas>
-        <canvas id="productivityHeatmap" width="400" height="200"></canvas>
     </div>
 </div>
 
 <script>
     // --- UTILITIES ---
-    // Loads data from localStorage, providing a fallback if nothing is found or an error occurs.
     const load = (key, fallback = []) => {
         try {
-            return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+            const stored = localStorage.getItem(key);
+            return stored ? JSON.parse(stored) : fallback;
         } catch (e) {
             console.error(`Error loading ${key} from localStorage:`, e);
             return fallback;
         }
     };
 
-    // Saves data to localStorage after converting it to a JSON string.
     const save = (key, data) => {
         try {
             localStorage.setItem(key, JSON.stringify(data));
@@ -741,18 +991,20 @@
         }
     };
 
-    // Updates the budget totals displayed in the main Budget module.
+    // Helper function to get CSS variable values dynamically (if still needed, though Chart.js removed from dashboard)
+    function getCssVar(variableName) {
+        return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+    }
+
+    // Updates the budget totals displayed in the main Budget module AND the Dashboard.
     const updateTotals = (income, expense) => {
-        // Add debugging logs to verify data flow
-        console.log("Updating totals with:", { income, expense });
         document.getElementById("totalIncome").textContent = `$${income.toFixed(2)}`;
         document.getElementById("totalExpense").textContent = `$${expense.toFixed(2)}`;
         document.getElementById("finalBalance").textContent = `$${(income - expense).toFixed(2)}`;
-        updateDashboardBudget();
+        updateDashboardBudget(); // Call to update dashboard as well
     };
 
     // --- CALENDAR AND TIME DISPLAY ---
-    // Displays the current date and time, updating every second.
     const updateDateTime = () => {
         const now = new Date();
         const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -763,13 +1015,11 @@
     };
 
     // --- TASK MANAGEMENT MODULE ---
-    let tasks = load("tasks", []); // Load tasks from localStorage
-    let currentFilter = 'all'; // Default filter for tasks
+    let tasks = load("tasks", []);
+    let currentFilter = 'all';
 
-    // Renders the list of tasks.
     const renderTasks = () => {
         const list = document.getElementById("taskList");
-        // Filter and map tasks to HTML list items.
         list.innerHTML = tasks
             .filter(task => currentFilter === 'all' || (currentFilter === 'active' ? !task.isCompleted : task.isCompleted))
             .map(task => `
@@ -788,57 +1038,66 @@
                     <button class="delete-btn" onclick="removeTask(${task.id})">🦕</button>
                 </li>
             `).join("") || `<li style="justify-content: center; color: var(--text-light);">The jungle is quiet. No tasks to hunt right now! 🦎</li>`;
-        renderCompletionStats(); // Update completion statistics
+        renderUpcomingTasks();
+        updateGamificationDisplay(); // Update gamification when tasks change
     };
 
-    // Adds a new task based on form inputs.
     const addTask = () => {
         const taskText = document.getElementById("taskInput").value.trim();
         const taskDate = document.getElementById("taskDate").value;
         const taskTime = document.getElementById("taskTime").value;
-        const taskCategory = document.getElementById("taskCategory").value; // Get category value
+        const taskCategory = document.getElementById("taskCategory").value;
 
         if (!taskText) return alert("Rawr! Please describe your hunt!");
         if (!taskCategory) return alert("Don't forget to select a category for your task!");
 
-
         tasks.push({
-            id: Date.now(), // Unique ID for the task
+            id: Date.now(),
             text: taskText,
             isCompleted: false,
             isImportant: document.getElementById("taskImportant").checked,
             date: taskDate,
             time: taskTime,
-            category: taskCategory // Store category
+            category: taskCategory,
+            addedDate: new Date().toISOString().split('T')[0] // For heatmap (even if not displayed, good to track)
         });
-        save("tasks", tasks); // Save updated tasks to localStorage
-        // Clear form fields
+        save("tasks", tasks);
         document.getElementById("taskInput").value = "";
         document.getElementById("taskDate").value = "";
         document.getElementById("taskTime").value = "";
-        document.getElementById("taskCategory").value = ""; // Clear category field
+        document.getElementById("taskCategory").value = "";
         document.getElementById("taskImportant").checked = false;
-        renderTasks(); // Re-render tasks list
+        renderTasks();
     };
 
-    // Toggles the completion status of a task.
     const toggleTask = id => {
         const task = tasks.find(task => task.id === id);
         if (task) {
+            const wasCompleted = task.isCompleted;
             task.isCompleted = !task.isCompleted;
             save("tasks", tasks);
+
+            // Gamification logic
+            if (task.isCompleted && !wasCompleted) { // Task was just completed
+                addPoints(10); // Example: 10 points per task
+                checkStreak();
+                checkAchievements();
+            } else if (!task.isCompleted && wasCompleted) { // Task was unchecked
+                 // Optionally remove points or reset streak if desired, for now, no penalty
+                 checkStreak(); // Re-evaluate streak if a task is uncompleted
+                 checkAchievements(); // Re-evaluate achievements
+            }
             renderTasks();
         }
     };
 
-    // Removes a task from the list.
     const removeTask = id => {
         tasks = tasks.filter(task => task.id !== id);
         save("tasks", tasks);
         renderTasks();
+        updateGamificationDisplay(); // Update gamification after removal
     };
 
-    // Filters tasks based on the selected filter (all, active, completed).
     const filterTasks = filter => {
         currentFilter = filter;
         document.querySelectorAll('.task-filters button').forEach(btn => btn.classList.remove('active'));
@@ -846,49 +1105,14 @@
         renderTasks();
     };
 
-    // Recurring tasks and templates
-    const addRecurringTask = (task, interval) => {
-        const nextDate = new Date(task.date);
-        nextDate.setDate(nextDate.getDate() + interval);
-        tasks.push({ ...task, date: nextDate.toISOString().split('T')[0] });
-        save("tasks", tasks);
-        renderTasks();
-    };
-
-    const taskTemplates = [
-        { text: "Daily Check-in", category: "Other", isImportant: false },
-        { text: "Weekly Planning", category: "Nest", isImportant: true }
-    ];
-
-    const applyTaskTemplate = template => {
-        tasks.push({ ...template, id: Date.now(), date: new Date().toISOString().split('T')[0] });
-        save("tasks", tasks);
-        renderTasks();
-    };
-
-    // Completion statistics
-    const renderCompletionStats = () => {
-        const completed = tasks.filter(task => task.isCompleted).length;
-        const total = tasks.length;
-        document.getElementById("completionStats").textContent = `Completed: ${completed}/${total}`;
-    };
-
-    // Smart suggestion feature
-    const suggestTaskPriority = () => {
-        const upcomingTasks = tasks.filter(task => !task.isCompleted && task.date);
-        upcomingTasks.sort((a, b) => new Date(a.date) - new Date(b.date));
-        return upcomingTasks[0]?.text || "No suggestions available";
-    };
 
     // --- BUDGET TRACKER MODULE ---
-    let budget = load("budget", []); // Load budget entries from localStorage
+    let budget = load("budget", []);
 
-    // Renders budget entries and updates totals.
     const renderBudget = () => {
         const list = document.getElementById("budgetList");
         let totalIncome = 0, totalExpense = 0;
 
-        // Map budget entries to HTML list items and calculate totals.
         list.innerHTML = budget.map((entry, i) => {
             if (entry.type === 'income') totalIncome += entry.amount;
             else totalExpense += entry.amount;
@@ -907,10 +1131,9 @@
             `;
         }).join("") || `<li style="justify-content: center; color: var(--text-light);">The fossil beds are empty. 🦴</li>`;
 
-        updateTotals(totalIncome, totalExpense); // Update overall totals.
+        updateTotals(totalIncome, totalExpense);
     };
 
-    // Adds a new budget entry.
     const addBudget = () => {
         const desc = document.getElementById("budgetDesc").value.trim();
         const category = document.getElementById("budgetCategory").value.trim();
@@ -919,50 +1142,24 @@
 
         if (!desc || !category || isNaN(amount) || amount <= 0) return alert("Grrr! Please describe your treasure!");
 
-        budget.push({ desc, category, amount, type });
+        budget.push({ desc, category, amount, type, date: new Date().toISOString().split('T')[0] });
         save("budget", budget);
-        // Clear form fields
         document.getElementById("budgetDesc").value = "";
         document.getElementById("budgetCategory").value = "";
         document.getElementById("budgetAmount").value = "";
         renderBudget();
     };
 
-    // Removes a budget entry.
     const removeBudget = index => {
         budget.splice(index, 1);
         save("budget", budget);
         renderBudget();
     };
 
-    // Monthly budget goals
-    const monthlyGoal = { income: 2000, expense: 1500 };
-
-    const renderBudgetGoals = () => {
-        document.getElementById("budgetGoals").textContent = `Income Goal: $${monthlyGoal.income}, Expense Limit: $${monthlyGoal.expense}`;
-    };
-
-    // Spending insights
-    const calculateSpendingInsights = () => {
-        const totalIncome = budget.filter(entry => entry.type === "income").reduce((sum, entry) => sum + entry.amount, 0);
-        const totalExpense = budget.filter(entry => entry.type === "expense").reduce((sum, entry) => sum + entry.amount, 0);
-        return { totalIncome, totalExpense, balance: totalIncome - totalExpense };
-    };
-
-    // Spending recommendation
-    const recommendBudgetAdjustments = () => {
-        const insights = calculateSpendingInsights();
-        if (insights.balance < 0) {
-            return "Consider reducing expenses or increasing income sources.";
-        } else {
-            return "Your budget is on track! Keep it up!";
-        }
-    };
 
     // --- NOTES MODULE ---
-    let notes = load("notes", []); // Load notes from localStorage
+    let notes = load("notes", []);
 
-    // Renders the list of notes.
     const renderNotes = () => {
         const list = document.getElementById("noteList");
         list.innerHTML = notes.map((note, i) => `
@@ -974,9 +1171,9 @@
                 <button class="delete-btn" onclick="removeNote(${i})">🦕</button>
             </li>
         `).join("") || `<li style="justify-content: center; color: var(--text-light);">No ancient wisdom recorded yet! 🎨</li>`;
+        renderRecentNotes();
     };
 
-    // Adds a new note based on form inputs.
     const addNote = () => {
         const title = document.getElementById("noteTitle").value.trim();
         const content = document.getElementById("noteContent").value.trim();
@@ -984,118 +1181,177 @@
         if (!title || !content) return alert("Don't forget both a scroll title and wisdom!");
 
         notes.push({
-            id: Date.now(), // Unique ID for the note
+            id: Date.now(),
             title,
             content,
             isImportant: document.getElementById("noteImportant").checked
         });
-        save("notes", notes); // Save updated notes to localStorage
-        // Clear form fields
+        save("notes", notes);
         document.getElementById("noteTitle").value = "";
         document.getElementById("noteContent").value = "";
         document.getElementById("noteImportant").checked = false;
-        renderNotes(); // Re-render notes list
+        renderNotes();
     };
 
-    // Removes a note from the list.
     const removeNote = index => {
         notes.splice(index, 1);
         save("notes", notes);
         renderNotes();
     };
 
-    // Categories, tags, and markdown support
-    const renderMarkdown = markdown => {
-        const converter = new showdown.Converter();
-        return converter.makeHtml(markdown);
-    };
-
-    const addNoteWithTags = (title, content, tags) => {
-        notes.push({ title, content, tags, id: Date.now() });
-        save("notes", notes);
-        renderNotes();
-    };
-
-    // Search functionality
-    const searchNotes = query => {
-        return notes.filter(note => note.title.includes(query) || note.content.includes(query));
-    };
-
-    // Related notes feature
-    const findRelatedNotes = tags => {
-        return notes.filter(note => tags.some(tag => note.tags.includes(tag)));
-    };
-
     // --- DINO DASHBOARD ---
     const renderDashboard = () => {
-        // Render upcoming tasks
-        const upcomingTasks = tasks.filter(task => !task.isCompleted).slice(0, 5);
-        document.getElementById("upcomingTasks").innerHTML = upcomingTasks.map(task => `
-            <li>${task.text} - ${task.date || "No date"}</li>
-        `).join("");
+        renderUpcomingTasks();
+        updateDashboardBudget(); // Update text summary
+        renderRecentNotes();
 
-        // Render budget overview
-        const ctx = document.getElementById("budgetChart").getContext("2d");
-        const totalIncome = budget.filter(entry => entry.type === "income").reduce((sum, entry) => sum + entry.amount, 0);
-        const totalExpense = budget.filter(entry => entry.type === "expense").reduce((sum, entry) => sum + entry.amount, 0);
-        const balance = totalIncome - totalExpense;
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Income', 'Expense'],
-                datasets: [{
-                    label: 'Budget Overview',
-                    data: [totalIncome, totalExpense],
-                    backgroundColor: ['#81c784', '#e57373']
-                }]
-            }
-        });
-        document.getElementById("budgetSummary").textContent = `Income: $${totalIncome.toFixed(2)}, Expense: $${totalExpense.toFixed(2)}, Balance: $${balance.toFixed(2)}`;
-
-        // Render recent notes
-        const recentNotes = notes.slice(0, 5);
-        document.getElementById("recentNotes").innerHTML = recentNotes.map(note => `
-            <li>${note.title}: ${note.content.substring(0, 50)}...</li>
-        `).join("");
-
-        // Render daily recommendations
         document.getElementById("dailyRecommendations").textContent = "🌟 Remember to prioritize tasks with upcoming deadlines!";
     };
 
-    // Call renderDashboard when the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', renderDashboard);
+    const updateDashboardBudget = () => {
+        const income = budget.filter(entry => entry.type === "income").reduce((sum, entry) => sum + entry.amount, 0);
+        const expense = budget.filter(entry => entry.type === "expense").reduce((sum, entry) => sum + entry.amount, 0);
+        const balance = income - expense;
+
+        document.getElementById("dashboardIncome").textContent = income.toFixed(2);
+        document.getElementById("dashboardExpense").textContent = expense.toFixed(2);
+        document.getElementById("dashboardBalance").textContent = balance.toFixed(2);
+    };
+
+    // Modified to show only the latest upcoming task
+    const renderUpcomingTasks = () => {
+        const upcomingList = document.getElementById("upcomingTasks");
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const upcoming = tasks.filter(task => {
+            if (!task.isCompleted && task.date) {
+                const taskDueDate = new Date(task.date);
+                taskDueDate.setHours(0, 0, 0, 0);
+                // Only consider tasks due today or in the future
+                return taskDueDate >= today;
+            }
+            return false;
+        }).sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by date ascending
+
+        if (upcoming.length === 0) {
+            upcomingList.innerHTML = '<li style="color: var(--text-light); text-align: center;">No upcoming hunts. Time for relaxation! 🌴</li>';
+        } else {
+            // Display only the first (soonest) upcoming task
+            const task = upcoming[0];
+            const taskDate = new Date(task.date);
+            const formattedDate = taskDate.toLocaleDateString('en-GB');
+            upcomingList.innerHTML = `<li class="${task.isImportant ? 'important' : ''}">
+                                        <strong>${task.text}</strong>
+                                        <br><small>Due: ${formattedDate}${task.time ? ` at ${task.time}` : ''}</small>
+                                        ${task.category ? `<br><small>Category: ${task.category}</small>` : ''}
+                                    </li>`;
+        }
+    };
+
+    // Modified to show only the latest recent note
+    const renderRecentNotes = () => {
+        const recentNotesList = document.getElementById("recentNotes");
+        const recent = [...notes].sort((a, b) => b.id - a.id); // Sort by ID (creation time) descending
+
+        if (recent.length === 0) {
+            recentNotesList.innerHTML = '<li style="color: var(--text-light); text-align: center;">No recent cave paintings.</li>';
+        } else {
+            // Display only the first (latest) note
+            const note = recent[0];
+            recentNotesList.innerHTML = `<li class="${note.isImportant ? 'important' : ''}">
+                                            <strong>${note.title}</strong>
+                                            <br><small>${note.content.substring(0, 40)}${note.content.length > 40 ? '...' : ''}</small>
+                                        </li>`;
+        }
+    };
+
 
     // --- THEME CUSTOMIZATION ---
     const themes = {
         dino: {
             '--bg-main': '#ffebee',
+            '--bg-section': '#fff8e1',
             '--text-dark': '#4a148c',
+            '--text-light': '#ce93d8',
             '--accent-primary': '#ffcdb2',
+            '--accent-secondary': '#f0f4c3',
+            '--accent-highlight': '#e1bee7',
+            '--color-success': '#81c784',
+            '--color-danger': '#e57373',
+            '--shadow': '0 10px 25px rgba(0, 0, 0, 0.15)',
+            '--border-radius': '25px',
         },
         dark: {
-            '--bg-main': '#121212',
-            '--text-dark': '#ffffff',
-            '--accent-primary': '#bb86fc',
+            '--bg-main': '#1a1a2e',
+            '--bg-section': '#232946',
+            '--text-dark': '#e0e0e0', /* Ensures readability */
+            '--text-light': '#b0b0b0', /* Ensures readability */
+            '--accent-primary': '#e94560',
+            '--accent-secondary': '#8b5e83',
+            '--accent-highlight': '#ffb0b0',
+            '--color-success': '#4CAF50',
+            '--color-danger': '#F44336',
+            '--shadow': '0 10px 25px rgba(0, 0, 0, 0.4)',
+            '--border-radius': '25px',
         },
         autism: {
-            '--bg-main': '#f0f4c3',
-            '--text-dark': '#1b5e20',
-            '--accent-primary': '#ffcc80',
+            '--bg-main': '#e3f2fd',
+            '--bg-section': '#bbdefb',
+            '--text-dark': '#1565c0',
+            '--text-light': '#64b5f6',
+            '--accent-primary': '#90caf9',
+            '--accent-secondary': '#e1f5fe',
+            '--accent-highlight': '#a7ffeb',
+            '--color-success': '#4dd0e1',
+            '--color-danger': '#ffab91',
+            '--shadow': '0 5px 15px rgba(0, 0, 0, 0.08)',
+            '--border-radius': '15px',
         },
         professional: {
-            '--bg-main': '#e0f7fa',
-            '--text-dark': '#004d40',
-            '--accent-primary': '#80cbc4',
+            '--bg-main': '#f5f5f5',
+            '--bg-section': '#ffffff',
+            '--text-dark': '#37474f',
+            '--text-light': '#78909c',
+            '--accent-primary': '#42a5f5',
+            '--accent-secondary': '#e3f2fd',
+            '--accent-highlight': '#b3e5fc',
+            '--color-success': '#66bb6a',
+            '--color-danger': '#ef5350',
+            '--shadow': '0 8px 20px rgba(0, 0, 0, 0.1)',
+            '--border-radius': '10px',
+        },
+        'color-blind-friendly': { /* New Theme */
+            '--bg-main': '#f0f8ff', /* Alice Blue - very light, neutral */
+            '--bg-section': '#e0f2f7', /* Light Cyan - calm, slightly tinted */
+            '--text-dark': '#005f73', /* Dark Teal - good contrast for text */
+            '--text-light': '#48b1bf', /* Medium Teal - for muted text */
+            '--accent-primary': '#e69f00', /* Orange - highly visible accent */
+            '--accent-secondary': '#0072b2', /* Blue - another distinct accent */
+            '--accent-highlight': '#56b4e9', /* Light Blue - for highlights */
+            '--color-success': '#009e73', /* Greenish Teal - distinct from red/orange */
+            '--color-danger': '#d55e00', /* Reddish Orange - distinct for errors */
+            '--shadow': '0 5px 15px rgba(0, 0, 0, 0.08)',
+            '--border-radius': '20px',
         }
     };
 
-    const applyTheme = theme => {
+    const applyTheme = themeName => {
         const root = document.documentElement;
-        const selectedTheme = themes[theme];
+        const body = document.body;
+
+        // Remove all theme classes first
+        body.classList.remove('dino-theme', 'dark-theme', 'autism-theme', 'professional-theme', 'color-blind-friendly-theme');
+        // Add the selected theme class
+        body.classList.add(`${themeName}-theme`);
+
+        const selectedTheme = themes[themeName];
         for (const [key, value] of Object.entries(selectedTheme)) {
             root.style.setProperty(key, value);
         }
-        localStorage.setItem('theme', theme);
+        localStorage.setItem('theme', themeName);
+
+        // No need to re-render dashboard chart as it's removed
     };
 
     const loadTheme = () => {
@@ -1104,81 +1360,123 @@
         applyTheme(savedTheme);
     };
 
-    // --- DATA VISUALIZATION ---
-    const renderBudgetTrends = () => {
-        const ctx = document.getElementById('budgetTrendsChart').getContext('2d');
-        const monthlyData = [500, 700, 800, 600, 900, 1000]; // Placeholder data
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Budget Trends',
-                    data: monthlyData,
-                    borderColor: '#81c784',
-                    backgroundColor: 'rgba(129, 199, 132, 0.2)',
-                }]
-            }
-        });
+    // --- GAMIFICATION ---
+    let dinoPoints = load('dinoPoints', 0);
+    let dinoLevel = load('dinoLevel', 1);
+    let dinoStreakData = load('dinoStreakData', { count: 0, lastDate: null });
+    let unlockedAchievements = load('unlockedAchievements', []);
+
+    // Achievement definitions
+    const achievements = [
+        { id: 'first_task', name: 'First Hunt!', description: 'Complete your first task', requirement: { type: 'tasksCompleted', value: 1 }, badge: '🥚' },
+        { id: 'task_master', name: 'Task Master', description: 'Complete 10 tasks', requirement: { type: 'tasksCompleted', value: 10 }, badge: '🦖' },
+        { id: 'streak_3', name: 'Baby Dino Streak', description: 'Complete tasks 3 days in a row', requirement: { type: 'streak', value: 3 }, badge: '🌿' },
+        { id: 'streak_7', name: 'Alpha Dino Streak', description: 'Complete tasks 7 days in a row', requirement: { type: 'streak', value: 7 }, badge: '🔥' },
+        { id: 'point_collector', name: 'Fossil Hoarder', description: 'Accumulate 100 points', requirement: { type: 'points', value: 100 }, badge: '💎' },
+        { id: 'super_dino', name: 'Super Dino', description: 'Complete 50 tasks', requirement: { type: 'tasksCompleted', value: 50 }, badge: '🌟' }
+    ];
+
+    const addPoints = amount => {
+        dinoPoints += amount;
+        updateLevel();
+        save('dinoPoints', dinoPoints);
+        updateGamificationDisplay();
     };
 
-    const renderProductivityHeatmap = () => {
-        const canvas = document.getElementById('productivityHeatmap');
-        const ctx = canvas.getContext('2d');
-        const heatmapData = [
-            [1, 2, 3, 4, 5],
-            [2, 3, 4, 5, 6],
-            [3, 4, 5, 6, 7],
-            [4, 5, 6, 7, 8],
-            [5, 6, 7, 8, 9]
-        ];
+    const updateLevel = () => {
+        // Simple leveling system: Level up every 50 points
+        const newLevel = Math.floor(dinoPoints / 50) + 1;
+        if (newLevel > dinoLevel) {
+            dinoLevel = newLevel;
+            alert(`Rawr! You've reached Level ${dinoLevel}! Keep stomping!`); // Use alert temporarily
+            save('dinoLevel', dinoLevel);
+        }
+    };
 
-        const cellSize = 40;
-        heatmapData.forEach((row, rowIndex) => {
-            row.forEach((value, colIndex) => {
-                const intensity = Math.min(255, value * 30);
-                ctx.fillStyle = `rgb(${255 - intensity}, ${255 - intensity}, ${255})`;
-                ctx.fillRect(colIndex * cellSize, rowIndex * cellSize, cellSize, cellSize);
-            });
+    const checkStreak = () => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const lastDate = dinoStreakData.lastDate ? new Date(dinoStreakData.lastDate) : null;
+        const completedToday = tasks.some(task => task.isCompleted && new Date(task.addedDate).setHours(0,0,0,0) === today.getTime());
+
+        if (completedToday) {
+            if (!lastDate || lastDate.getTime() !== today.getTime()) { // If not already counted for today
+                const yesterday = new Date(today);
+                yesterday.setDate(today.getDate() - 1);
+
+                if (lastDate && lastDate.getTime() === yesterday.getTime()) {
+                    dinoStreakData.count++;
+                } else {
+                    dinoStreakData.count = 1; // Reset if broken or first day
+                }
+                dinoStreakData.lastDate = today.toISOString().split('T')[0];
+            }
+        } else {
+            // If no task completed today, and the last completion was not today, reset streak.
+            // This handles cases where user comes back after a gap
+            if (lastDate && lastDate.getTime() < today.getTime()) {
+                 dinoStreakData.count = 0;
+            }
+        }
+        save('dinoStreakData', dinoStreakData);
+        updateGamificationDisplay();
+    };
+
+
+    const checkAchievements = () => {
+        const totalTasksCompleted = tasks.filter(task => task.isCompleted).length;
+
+        achievements.forEach(achievement => {
+            if (!unlockedAchievements.includes(achievement.id)) {
+                let unlocked = false;
+                if (achievement.requirement.type === 'tasksCompleted' && totalTasksCompleted >= achievement.requirement.value) {
+                    unlocked = true;
+                } else if (achievement.requirement.type === 'streak' && dinoStreakData.count >= achievement.requirement.value) {
+                    unlocked = true;
+                } else if (achievement.requirement.type === 'points' && dinoPoints >= achievement.requirement.value) {
+                    unlocked = true;
+                }
+
+                if (unlocked) {
+                    unlockedAchievements.push(achievement.id);
+                    save('unlockedAchievements', unlockedAchievements);
+                    alert(`Achievement Unlocked: ${achievement.name}! ${achievement.badge}`); // Use alert temporarily
+                }
+            }
         });
+        updateGamificationDisplay();
+    };
+
+    const updateGamificationDisplay = () => {
+        document.getElementById('dinoPoints').textContent = dinoPoints;
+        document.getElementById('dinoLevel').textContent = dinoLevel;
+        document.getElementById('dinoStreak').textContent = dinoStreakData.count;
+
+        const badgesContainer = document.getElementById('achievementBadges');
+        badgesContainer.innerHTML = achievements.map(achievement => {
+            const isUnlocked = unlockedAchievements.includes(achievement.id);
+            return `<span class="badge ${isUnlocked ? 'unlocked' : ''}" title="${achievement.name}: ${achievement.description}">${achievement.badge}</span>`;
+        }).join('');
     };
 
     // --- INITIALIZE APP ---
-    // This function runs when the page loads, initializing all modules.
     const initialize = () => {
-        updateDateTime(); // Display initial date and time
-        setInterval(updateDateTime, 1000); // Update time every second
-        renderTasks(); // Renders tasks
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        loadTheme(); // Load theme first to apply colors
+        renderTasks(); // Renders tasks and triggers upcoming tasks
         renderBudget(); // Renders budget
-        renderNotes(); // Renders notes
-        renderDashboard(); // Renders dashboard
-        renderBudgetGoals(); // Renders monthly budget goals
-        loadTheme(); // Load and apply saved theme
+        renderNotes(); // Renders notes and triggers recent notes
+        
+        // Initialize gamification data and display
+        checkStreak(); // Initial check for streak based on existing tasks
+        checkAchievements(); // Initial check for achievements
+        updateGamificationDisplay();
+
+        renderDashboard(); // Renders dashboard components after all data is loaded/rendered
     };
 
-    // Call initialize when the DOM is fully loaded.
     document.addEventListener('DOMContentLoaded', initialize);
-
-    // Link Budget Overview dynamically with Dino Budget's data
-    const updateDashboardBudget = () => {
-        const income = parseFloat(document.getElementById("totalIncome").textContent.replace('$', '')) || 0;
-        const expense = parseFloat(document.getElementById("totalExpense").textContent.replace('$', '')) || 0;
-        const balance = parseFloat(document.getElementById("finalBalance").textContent.replace('$', '')) || 0;
-
-        document.getElementById("dashboardIncome").textContent = income.toFixed(2);
-        document.getElementById("dashboardExpense").textContent = expense.toFixed(2);
-        document.getElementById("dashboardBalance").textContent = balance.toFixed(2);
-    };
-
-    // Call the function whenever budget totals are updated
-    updateTotals = (income, expense) => {
-        // Add debugging logs to verify data flow
-        console.log("Updating totals with:", { income, expense });
-        document.getElementById("totalIncome").textContent = `$${income.toFixed(2)}`;
-        document.getElementById("totalExpense").textContent = `$${expense.toFixed(2)}`;
-        document.getElementById("finalBalance").textContent = `$${(income - expense).toFixed(2)}`;
-        updateDashboardBudget();
-    };
 </script>
 </body>
 </html>
