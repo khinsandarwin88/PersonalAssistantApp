@@ -1,4 +1,5 @@
 🦖 DinoDesk: Your Super Cute Personal Assistant 🌿
+
 Project Overview
 DinoDesk is a charming and intuitive single-page web application designed to make daily personal management (tasks, budget, notes) a delightful prehistoric adventure! Inspired by a lifelong passion for dinosaurs, this assistant combines core productivity features with engaging gamification and customization options, transforming mundane routines into exciting challenges.
 
@@ -31,7 +32,7 @@ Set monthly budget goals and receive "spending recommendations" based on your pr
 
 Visualize your income vs. expense with a dynamic chart.
 
-📜 Ancient Scrolls (Notes Module):
+📜 Dino Notes:
 
 Scribe your "ancient wisdom" with titles and content.
 
